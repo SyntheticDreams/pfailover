@@ -1,0 +1,19 @@
+#! /bin/sh
+
+## The .secondary script file runs when connection has failed on the monitored interface.
+
+## Make sure we always ping the destination IP from our primary interface 
+## THIS LINE IS NECESSARY FOR MOST CONFIGURATIONS - pinging from the secondary interface will
+## cause pfailure to flip back and forth since the ping will succeed and change the monitor state.
+## Be sure to update the gateway accordingly
+#route add -host $1 gw 192.168.0.1
+
+## Remove our default route to 192.168.0.1 (connected to our primary interface eth1)
+#route del default gw 192.168.0.1 eth1
+
+## Add a new default route to 10.10.1.1 (connected to our secondary interface, eth0)
+#route add default gw 10.10.1.1 eth0
+
+## Send an email notification
+#echo Primary connection  failed on `date` | mail -s "Primary connection failed on server, switching to secondary..." user@someserver.com
+

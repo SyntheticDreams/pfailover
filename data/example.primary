@@ -1,0 +1,13 @@
+#! /bin/sh
+
+## The .primary script file runs when connection has been restored on the monitored interface.
+
+## Remove our default route to 10.10.1.1 (connected to our secondary interface eth0)
+#route del default gw 10.10.1.1 eth0
+
+## Add a new default route to 192.168.0.1 (connected to our primary interface, eth1)
+#route add default gw 192.168.0.1 eth1
+
+## Send an email notification
+#echo Primary connection restored on `date` | mail -s "Primary connection restored on server" user@someserver.com
+
